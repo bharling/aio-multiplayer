@@ -12,13 +12,15 @@ class Game(object):
         self.app = app
         self.world = esper.World()
         self.players = {} # indexed by session key from sockjs
+        self.processors = []
         self.running = True
         self.elapsed = 0.0
         asyncio.ensure_future(self.game_loop())
 
-
     def player_joined(self, session, email=None):
-        self.players[session.id] = session
+        ent = self.world.create_entity()
+        ent.socket = session
+        self.players[session.id] = ent
 
     async def game_loop(self):
         if not getattr(self, 'last_tick', None):
@@ -30,7 +32,7 @@ class Game(object):
             self.elapsed += dt
             if self.elapsed >= FPS:
                 for player in self.players.values():
-                    player.send('Tick')
+                    player.socket.send('Tick')
                 self.elapsed = 0
             await asyncio.sleep(0)
 
