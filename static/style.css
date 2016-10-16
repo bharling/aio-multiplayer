@@ -1,0 +1,18 @@
+html, body {
+	font-family: Arial, sans-serif;
+	margin:0;
+	background: green;
+}
+
+#log {
+	height:200px;
+	max-height: 200px;
+	overflow:scroll;
+}
+
+
+canvas {
+	width: 500px;
+	height: 500px;
+	border: 1px solid #000;
+}

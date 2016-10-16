@@ -1,0 +1,1 @@
+export AIOHTTP_NOSENDFILE=1
